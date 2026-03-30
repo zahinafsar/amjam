@@ -1,26 +1,99 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --game-primary: #4ade80;
+  --game-primary-dark: #22c55e;
+  --game-secondary: #60a5fa;
+  --game-secondary-dark: #3b82f6;
+  --game-accent: #fbbf24;
+  --game-danger: #f87171;
+  --game-surface: rgba(255, 255, 255, 0.15);
+  --game-surface-solid: rgba(255, 255, 255, 0.9);
+  --game-text: #1e293b;
+  --game-text-light: #ffffff;
+  --game-shadow: rgba(0, 0, 0, 0.25);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background-image: url("/bg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--game-text);
+}
+
+/* Glass card effect */
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* 3D button press effect */
+.btn-3d {
+  transition: all 0.15s ease;
+  transform: translateY(0);
+  box-shadow:
+    0 6px 0 var(--btn-shadow-color, #166534),
+    0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 0 var(--btn-shadow-color, #166534),
+    0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-3d:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 var(--btn-shadow-color, #166534),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Card flip animation */
+@keyframes cardDeal {
+  from {
+    opacity: 0;
+    transform: scale(0.5) rotateY(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
+.card-deal {
+  animation: cardDeal 0.4s ease-out forwards;
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Pulse glow */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(74, 222, 128, 0.4); }
+  50% { box-shadow: 0 0 24px rgba(74, 222, 128, 0.8); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
 }
