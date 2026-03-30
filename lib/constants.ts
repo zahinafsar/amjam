@@ -11,4 +11,4 @@ export const CARD_COLORS = [
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 6;
 export const DISCONNECT_TIMEOUT_MS = 30_000;
-export const PORT = 3000;
+export const PORT = 3456;
