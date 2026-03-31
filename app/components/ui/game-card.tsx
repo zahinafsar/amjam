@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useMotionValue, useAnimationControls } from "framer-motion";
 import { CARD_COLORS } from "@/lib/constants";
 
@@ -17,9 +18,15 @@ interface GameCardProps {
 }
 
 const sizeClasses = {
-  sm: "w-14 h-20 rounded-xl text-lg",
-  md: "w-20 h-28 rounded-2xl text-2xl",
-  lg: "w-24 h-36 rounded-2xl text-3xl",
+  sm: "w-14 h-20 rounded-xl",
+  md: "w-20 h-28 rounded-2xl",
+  lg: "w-24 h-36 rounded-2xl",
+};
+
+const imageSizes = {
+  sm: 32,
+  md: 48,
+  lg: 60,
 };
 
 export function GameCard({
@@ -75,13 +82,13 @@ export function GameCard({
       onDragStart={() => onDragStateChange?.(true)}
       onDragEnd={handleDragEnd}
       animate={controls}
-      style={{ x, y, background: `linear-gradient(135deg, ${hex}dd, ${hex})` }}
+      style={{ x, y, background: "rgb(240 240 240)", borderColor: hex }}
       className={`
         ${sizeClasses[size]}
-        flex items-center justify-center font-black
-        border-3 select-none touch-none
+        flex items-center justify-center
+        border-3 select-none touch-none overflow-hidden
         ${isDraggable ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"}
-        ${selected ? "border-white shadow-[0_8px_24px_rgba(0,0,0,0.3)]" : "border-white/50 shadow-[0_4px_12px_rgba(0,0,0,0.15)]"}
+        ${selected ? "shadow-[0_8px_24px_rgba(0,0,0,0.3)]" : "shadow-[0_4px_12px_rgba(0,0,0,0.15)]"}
       `}
       initial={{ opacity: 0, scale: 0.5, rotateY: 180 }}
       whileInView={{
@@ -94,9 +101,20 @@ export function GameCard({
       whileHover={isDraggable ? { scale: 1.1, y: -8, transition: { duration: 0.15 } } : undefined}
       whileDrag={{ scale: 1.25, zIndex: 50, boxShadow: "0 16px 40px rgba(0,0,0,0.3)" }}
     >
-      <span className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
-        {color[0]}
-      </span>
+      {colorDef?.image ? (
+        <Image
+          src={colorDef.image}
+          alt={colorDef.name}
+          width={imageSizes[size]}
+          height={imageSizes[size]}
+          className="pointer-events-none"
+          draggable={false}
+        />
+      ) : (
+        <span className="text-white font-black drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
+          {color[0]}
+        </span>
+      )}
     </motion.button>
   );
 }
@@ -108,16 +126,27 @@ export function IncomingCard({ color }: { color: string }) {
 
   return (
     <motion.div
-      className="w-20 h-28 rounded-2xl text-2xl flex items-center justify-center font-black border-3 border-white/50"
-      style={{ background: `linear-gradient(135deg, ${hex}dd, ${hex})` }}
+      className="w-20 h-28 rounded-2xl flex items-center justify-center border-3 overflow-hidden"
+      style={{ background: "rgb(240 240 240)", borderColor: hex }}
       initial={{ x: 300, opacity: 0, scale: 0.5 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
     >
-      <span className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
-        {color[0]}
-      </span>
+      {colorDef?.image ? (
+        <Image
+          src={colorDef.image}
+          alt={colorDef.name}
+          width={48}
+          height={48}
+          className="pointer-events-none"
+          draggable={false}
+        />
+      ) : (
+        <span className="text-white font-black text-2xl drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">
+          {color[0]}
+        </span>
+      )}
     </motion.div>
   );
 }

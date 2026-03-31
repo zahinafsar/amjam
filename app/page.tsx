@@ -61,12 +61,15 @@ export default function Home() {
       <div className="glass rounded-3xl p-8 max-w-sm w-full">
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-black text-green-500" style={{
-            filter: "drop-shadow(0 2px 3px rgba(22, 163, 74, 0.2))",
+          <h1 className="text-6xl font-black tracking-tight" style={{
+            background: "linear-gradient(135deg, #4ade80 0%, #22c55e 50%, #16a34a 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            filter: "drop-shadow(0 4px 8px rgba(22, 163, 74, 0.3))",
+            letterSpacing: "-0.03em",
           }}>
             AmJam
           </h1>
-          <p className="text-gray-500 font-medium mt-2 text-sm">Local WiFi Card Game</p>
           <div className="mt-2">
             <span className={`inline-block w-2 h-2 rounded-full mr-1.5 ${connected ? "bg-green-500" : "bg-red-400"}`} />
             <span className="text-xs text-gray-500">{connected ? "Connected" : "Connecting..."}</span>
